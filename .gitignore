@@ -1,0 +1,4 @@
+output_channels.csv
+*.env
+__pycache__/
+.DS_Store
