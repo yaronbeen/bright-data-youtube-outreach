@@ -2,7 +2,7 @@
 
 Find YouTube creator emails at scale. Give it keywords, get back a CSV of channels with their contact emails.
 
-**Powered by [Bright Data](https://brightdata.com) YouTube datasets.**
+**Powered by [Bright Data](https://get.brightdata.com/1tndi4600b25) YouTube datasets.**
 
 ## What It Does
 
@@ -37,14 +37,14 @@ Running with keywords `claude code`, `ai coding assistant`, `cursor vs copilot`:
 ## Requirements
 
 - **Python 3.9 or higher** (comes pre-installed on most Macs; [download for Windows](https://www.python.org/downloads/))
-- **Bright Data account** with API access ([sign up here](https://brightdata.com))
+- **Bright Data account** with API access ([sign up here](https://get.brightdata.com/1tndi4600b25) - you'll get extra credits when signing up through this link)
 - No extra libraries needed - uses only Python built-in modules
 
 ## Setup (5 minutes)
 
 ### Step 1: Get Your Bright Data API Key
 
-1. Log into [Bright Data](https://brightdata.com/cp/setting/users)
+1. Log into [Bright Data](https://get.brightdata.com/1tndi4600b25)
 2. Go to **Settings > Account settings**
 3. Copy your **API token**
 
@@ -194,6 +194,10 @@ This uses Bright Data's **Web Scraper API** with two YouTube datasets:
 - **YouTube Channels** dataset: scrapes channel details
 
 Pricing depends on your Bright Data plan. A typical run with 3 keywords costs roughly a few cents.
+
+## Disclaimer
+
+Some links in this README are affiliate links. If you sign up for Bright Data through them, you may get extra credits on your account, and I may receive a small commission. This doesn't cost you anything extra - it helps support the project.
 
 ## License
 
