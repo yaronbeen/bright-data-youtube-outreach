@@ -1,4 +1,10 @@
-output_channels.csv
+output_*.csv
+outreach_emails.csv
 *.env
 __pycache__/
 .DS_Store
+.ruff_cache/
+.claude/
+.beads/
+.pytest_cache/
+AGENTS.md
