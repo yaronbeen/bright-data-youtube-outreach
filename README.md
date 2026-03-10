@@ -1,203 +1,113 @@
-# YouTube Channel Email Scraper
+# Instagram Influencer Email Scraper
 
-Find YouTube creator emails at scale. Give it keywords, get back a CSV of channels with their contact emails.
+Find Instagram influencer contact emails at scale using hashtags. Give it hashtags, get back a CSV of profiles with their contact emails.
 
-**Powered by [Bright Data](https://get.brightdata.com/1tndi4600b25) YouTube datasets.**
+**Powered by Bright Data Instagram datasets.**
 
 ## What It Does
 
 ```
-Your Keywords --> Search YouTube Videos --> Find Unique Channels --> Scrape Channel Pages --> Extract Emails --> CSV File
+Your Hashtags --> Search Instagram Posts --> Find Unique Influencers --> Scrape Profiles --> Extract Emails --> CSV File
 ```
 
-1. You provide search keywords (like "ai tools", "fitness tips", etc.)
-2. The script searches YouTube for videos matching those keywords
-3. It collects all unique channels from the video results
-4. It scrapes each channel's About page for contact info
-5. It extracts email addresses using pattern matching
+1. You provide hashtags (like `#fitness`, `#foodblogger`, `#techcreator`)
+2. The script searches Instagram posts matching each hashtag
+3. It collects unique influencer profile URLs from post owners
+4. It scrapes each influencer profile for bio and links
+5. It extracts email addresses from bio and external links
 6. Everything gets saved to a clean CSV file
-
-## Example Results
-
-Running with keywords `claude code`, `ai coding assistant`, `cursor vs copilot`:
-
-| Channel            | Subscribers | Email                           | Keyword             |
-| ------------------ | ----------- | ------------------------------- | ------------------- |
-| Leon van Zyl       | 90,200      | sponsors@leonvanzyl.com         | claude code         |
-| Zinho Automates    | 44,300      | business@zinhomedia.com         | claude code         |
-| Robin Ebers        | 42,800      | team@robinebers.com             | claude code         |
-| Software Scope     | 21,400      | howtotutorialspremium@gmail.com | cursor vs copilot   |
-| The West Reviews   | 1,610       | thunderclapmedialab@gmail.com   | cursor vs copilot   |
-| Tutorials By David | -           | davidmcnutt04@gmail.com         | ai coding assistant |
-| Tobi Teaches       | -           | tobiteaches@gmail.com           | ai coding assistant |
-| Nathan Covey       | -           | nathancovey23@gmail.com         | ai coding assistant |
-
-**From 3 keywords: 180 videos found, 131 unique channels, 9 emails extracted.**
 
 ## Requirements
 
-- **Python 3.9 or higher** (comes pre-installed on most Macs; [download for Windows](https://www.python.org/downloads/))
-- **Bright Data account** with API access ([sign up here](https://get.brightdata.com/1tndi4600b25) - you'll get extra credits when signing up through this link)
-- No extra libraries needed - uses only Python built-in modules
+- **Python 3.9 or higher**
+- **Bright Data account** with API access
+- Environment variable: `BRIGHT_DATA_API_KEY`
+- Environment variable: `BD_INSTAGRAM_POSTS_DATASET_ID`
+- Environment variable: `BD_INSTAGRAM_PROFILES_DATASET_ID`
+- No extra libraries needed (uses built-in modules only)
 
-## Setup (5 minutes)
+## Setup
 
-### Step 1: Get Your Bright Data API Key
+### 1) Set API key
 
-1. Log into [Bright Data](https://get.brightdata.com/1tndi4600b25)
-2. Go to **Settings > Account settings**
-3. Copy your **API token**
+**Windows (Command Prompt):**
 
-### Step 2: Set Your API Key
-
-**On Windows** (Command Prompt):
-
-```
+```bash
 set BRIGHT_DATA_API_KEY=your-api-key-here
 ```
 
-**On Windows** (PowerShell):
+**Windows (PowerShell):**
 
-```
+```powershell
 $env:BRIGHT_DATA_API_KEY = "your-api-key-here"
 ```
 
-**On Mac/Linux** (Terminal):
+**Mac/Linux:**
 
-```
+```bash
 export BRIGHT_DATA_API_KEY=your-api-key-here
 ```
 
-### Step 3: Prepare Your Keywords
+### 2) Set Instagram dataset IDs
 
-Edit `keywords.csv` with any text editor (Notepad, TextEdit, etc.):
-
-```
-keyword,num_of_posts
-fitness tips,60
-home workout,60
-yoga for beginners,30
+```bash
+export BD_INSTAGRAM_POSTS_DATASET_ID=your-instagram-posts-dataset-id
+export BD_INSTAGRAM_PROFILES_DATASET_ID=your-instagram-profiles-dataset-id
 ```
 
-- **keyword**: What to search on YouTube
-- **num_of_posts**: How many videos to search per keyword (default: 60)
+### 3) Add your hashtags
 
-## How to Run
+Edit `hashtags.csv`:
 
-Open your terminal/command prompt, navigate to this folder, and run:
-
-```
-python youtube_channel_scraper.py keywords.csv output_channels.csv
-```
-
-Or simply:
-
-```
-python youtube_channel_scraper.py
+```csv
+hashtag,num_of_posts
+#fitness,60
+#healthylifestyle,60
+#homeworkout,40
 ```
 
-This uses the built-in default keywords and saves to `output_channels.csv`.
+- `hashtag`: with or without `#`
+- `num_of_posts`: number of posts to discover per hashtag (default: 60)
 
-### What You'll See
+## Run
 
-```
-[1/9] Reading keywords from keywords.csv
-  Keywords: ['claude code', 'ai coding assistant', 'cursor vs copilot']
-
-[2/9] Triggering Bright Data Videos collection...
-  Triggering collection with 3 input(s)...
-  Snapshot ID: sd_mm0pqs8c1d7gb52nb7
-
-[3/9] Waiting for video collection to complete (this may take 2-5 minutes)...
-  Status: running (0s elapsed)
-  Status: ready (97s elapsed)
-
-[4/9] Downloading video results...
-  Got 180 video records
-
-[5/9] Deduplicating channels...
-  180 valid video records
-  Found 131 unique channels
-
-[6/9] Triggering Bright Data Channels collection...
-  Triggering collection with 131 input(s)...
-
-[7/9] Waiting for channel collection to complete (this may take 2-5 minutes)...
-  Status: running (0s elapsed)
-  Status: ready (142s elapsed)
-  Got 131 channel results
-
-[8/9] Extracting emails from channel descriptions...
-  Found 9 email(s) across 131 channels
-
-[9/9] Writing output to output_channels.csv...
-
-Done! 131 channels written to output_channels.csv
-  Channels with emails: 9
-  Total unique emails: 9
+```bash
+python instagram_influencer_scraper.py hashtags.csv output_influencers.csv
 ```
 
-## Output CSV Format
+Or run without args to use defaults:
 
-The output file has these columns:
-
-| Column         | Description                                |
-| -------------- | ------------------------------------------ |
-| `keyword`      | Which search keyword found this channel    |
-| `channel_url`  | Link to the YouTube channel                |
-| `channel_name` | Channel display name                       |
-| `subscribers`  | Subscriber count                           |
-| `description`  | Channel description (first 500 characters) |
-| `email`        | Extracted email address(es), if found      |
-| `links`        | Links from the channel's About page        |
-
-## How Email Extraction Works
-
-The script scans each channel's **description** and **links** for email patterns using regex:
-
-```
-anything@something.domain
+```bash
+python instagram_influencer_scraper.py
 ```
 
-This catches formats like:
+## Output CSV Columns
 
-- `business@example.com`
-- `contact.us@company.co.uk`
-- `name+tag@domain.org`
+| Column           | Description                                 |
+| ---------------- | ------------------------------------------- |
+| `hashtag`        | Hashtag(s) that discovered the profile      |
+| `profile_url`    | Instagram profile URL                       |
+| `username`       | Instagram handle                            |
+| `full_name`      | Profile name                                |
+| `followers`      | Follower count if available                 |
+| `bio`            | Profile bio text (trimmed)                  |
+| `email`          | Extracted email(s), if found                |
+| `external_links` | External links listed on profile (trimmed)  |
 
-Not every channel lists an email publicly. Typical results: **5-10% of channels** will have an email in their description.
+## Notes
 
-## Tips
-
-- **More keywords = more channels**: Each keyword searches up to 60 videos, yielding 30-50 unique channels
-- **Be specific**: "react tutorial 2024" finds more relevant creators than just "react"
-- **Niche keywords work best**: Smaller niches have higher email-in-bio rates
-- **Runs take 5-10 minutes**: Most of the time is Bright Data scraping YouTube pages
-- **No rate limits to worry about**: Bright Data handles all the scraping infrastructure
+- Email extraction is regex-based and checks bios + links.
+- Not all influencers publish contact emails publicly.
+- Results and available fields depend on your Bright Data dataset schema.
 
 ## Troubleshooting
 
-| Problem                               | Solution                                                             |
-| ------------------------------------- | -------------------------------------------------------------------- |
-| `ERROR: Set your Bright Data API key` | You forgot to set the environment variable (see Setup Step 2)        |
-| `HTTP 401`                            | Your API key is wrong or expired                                     |
-| `HTTP 400`                            | Check that your Bright Data account has the YouTube datasets enabled |
-| `Collection timed out`                | Try with fewer keywords or lower `num_of_posts`                      |
-| Script hangs at "Triggering..."       | The API call can take 30-60 seconds, this is normal                  |
-| `0 channels found`                    | Your keywords might be too niche. Try broader terms                  |
-
-## Cost
-
-This uses Bright Data's **Web Scraper API** with two YouTube datasets:
-
-- **YouTube Videos** dataset: discovers videos by keyword
-- **YouTube Channels** dataset: scrapes channel details
-
-Pricing depends on your Bright Data plan. A typical run with 3 keywords costs roughly a few cents.
-
-## Disclaimer
-
-Some links in this README are affiliate links. If you sign up for Bright Data through them, you may get extra credits on your account, and I may receive a small commission. This doesn't cost you anything extra - it helps support the project.
+| Problem | Solution |
+| --- | --- |
+| `ERROR: Set your Bright Data API key` | Set `BRIGHT_DATA_API_KEY` |
+| `ERROR: Set your Bright Data Instagram dataset IDs` | Set both Instagram dataset env vars |
+| `HTTP 401` | Invalid/expired API token |
+| `No influencer profiles found` | Try broader hashtags or increase `num_of_posts` |
 
 ## License
 
