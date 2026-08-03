@@ -195,6 +195,14 @@ This uses Bright Data's **Web Scraper API** with two YouTube datasets:
 
 Pricing depends on your Bright Data plan. A typical run with 3 keywords costs roughly a few cents.
 
+## Need a custom scraper?
+
+If you need different YouTube channel fields or a discovery flow this tool does not cover, you can build your own with [Bright Data's Scraper Studio](https://brightdata.com/products/scraper-studio). Describe the YouTube data you need in plain English, and Scraper Studio generates a production-ready scraper with your exact output schema. It includes self-healing, so when YouTube changes its channel pages, you describe the fix and ship a patch in minutes instead of rewriting parsers.
+
+## Free tier
+
+Every Bright Data account comes with 5,000 free credits per month (roughly $7.50 in value). Credits reset on the first of each month, and no credit card is required to start. That is enough to search a few keywords, scrape the resulting channels, and evaluate whether this pipeline fits your creator outreach process.
+
 ## Disclaimer
 
 Some links in this README are affiliate links. If you sign up for Bright Data through them, you may get extra credits on your account, and I may receive a small commission. This doesn't cost you anything extra - it helps support the project.
